@@ -55,7 +55,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  * Пример главной функции
  */
 fun main() {
-    val x1x2 = angleInRadian(0, 17,0)
+    val x1x2 = angleInRadian(0, 17, 0)
     print(x1x2)
 }
 
@@ -87,7 +87,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(deg: Int, min: Int, sec: Int): Double =
-    (deg * 60 * 60 + min * 60 + sec) / (180/PI * 60 * 60)
+    (deg * 60.0 * 60.0 + min * 60.0 + sec) / (180.0 * 60.0 * 60.0 / PI)
 
 /**
  * Тривиальная (1 балл)
