@@ -68,7 +68,21 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    if (age < 0 || age > 200) return "Введён неправильный возраст"
+    if (age in 1..4 || age in 21..105 || age in 121..200) {
+        return when {
+            age % 10 == 1 -> "$age год"
+            age % 10 == 2 -> "$age года"
+            age % 10 == 3 -> "$age года"
+            age % 10 == 4 -> "$age года"
+            else -> "$age лет"
+        }
+    } else {
+        return "$age лет"
+    }
+}
+
 
 /**
  * Простая (2 балла)
@@ -77,11 +91,28 @@ fun ageDescription(age: Int): String = TODO()
  * и t3 часов — со скоростью v3 км/час.
  * Определить, за какое время он одолел первую половину пути?
  */
+
+fun main() {
+    val x1x1 = timeForHalfWay(1.0, 1.0, 1.0, 1.0, 10.0, 10.0)
+    print(x1x1)
+}
+
+
 fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val d1 = t1 * v1
+    val d2 = t2 * v2
+    val d3 = t3 * v3
+    val halfD = (d1 + d2 + d3) / 2.0
+    return when {
+        d1 >= halfD -> halfD / v1
+        d2 >= halfD - d1 -> t1 + (halfD - d1) / v2
+        else -> t1 + t2 + (halfD - (d1+d2)) / v3
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -96,7 +127,9 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+
+}
 
 /**
  * Простая (2 балла)
