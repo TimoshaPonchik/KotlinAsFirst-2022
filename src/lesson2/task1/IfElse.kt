@@ -3,8 +3,10 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
+
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
 // Максимальное количество баллов = 6
@@ -95,6 +97,7 @@ fun ageDescription(age: Int): String {
 fun main() {
     val x1x1 = timeForHalfWay(1.0, 1.0, 1.0, 1.0, 10.0, 10.0)
     print(x1x1)
+    abs(3-2)
 }
 
 
@@ -127,8 +130,11 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
-
+): Int = when {
+    (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
+    kingX == rookX1 || kingY == rookY1 -> 1
+    kingX == rookX2 || kingY == rookY2 -> 2
+    else -> 0
 }
 
 /**
@@ -145,7 +151,12 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int = when {
+    (abs(bishopX-kingX) == abs(bishopY-kingY)) && (kingX == rookX || kingY == rookY) -> 3
+    kingX == rookX || kingY == rookY -> 1
+    abs(bishopX-kingX) == abs(bishopY-kingY) -> 2
+    else -> 0
+}
 
 /**
  * Простая (2 балла)
