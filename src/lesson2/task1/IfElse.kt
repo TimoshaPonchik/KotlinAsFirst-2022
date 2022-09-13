@@ -6,6 +6,8 @@ import lesson1.task1.discriminant
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
+import kotlin.math.pow
+
 
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -97,7 +99,7 @@ fun ageDescription(age: Int): String {
 fun main() {
     val x1x1 = timeForHalfWay(1.0, 1.0, 1.0, 1.0, 10.0, 10.0)
     print(x1x1)
-    abs(3-2)
+    abs(3 - 2)
 }
 
 
@@ -113,7 +115,7 @@ fun timeForHalfWay(
     return when {
         d1 >= halfD -> halfD / v1
         d2 >= halfD - d1 -> t1 + (halfD - d1) / v2
-        else -> t1 + t2 + (halfD - (d1+d2)) / v3
+        else -> t1 + t2 + (halfD - (d1 + d2)) / v3
     }
 }
 
@@ -152,9 +154,9 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int = when {
-    (abs(bishopX-kingX) == abs(bishopY-kingY)) && (kingX == rookX || kingY == rookY) -> 3
+    (abs(bishopX - kingX) == abs(bishopY - kingY)) && (kingX == rookX || kingY == rookY) -> 3
     kingX == rookX || kingY == rookY -> 1
-    abs(bishopX-kingX) == abs(bishopY-kingY) -> 2
+    abs(bishopX - kingX) == abs(bishopY - kingY) -> 2
     else -> 0
 }
 
@@ -166,7 +168,18 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val maxSide = max(max(a, b), max(a, c))
+    if (a + b + c - maxSide > maxSide) {
+        return when {
+            a.pow(2.0) + b.pow(2.0) + c.pow(2.0) - maxSide.pow(2.0) < maxSide.pow(2.0) -> 2
+            a.pow(2.0) + b.pow(2.0) + c.pow(2.0) - maxSide.pow(2.0) > maxSide.pow(2.0) -> 0
+            else -> 1
+        }
+    } else {
+        return -1
+    }
+}
 
 /**
  * Средняя (3 балла)
