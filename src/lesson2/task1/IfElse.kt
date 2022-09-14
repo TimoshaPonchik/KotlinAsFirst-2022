@@ -9,7 +9,6 @@ import kotlin.math.sqrt
 import kotlin.math.pow
 
 
-
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
 // Максимальное количество баллов = 6
 // Рекомендуемое количество баллов = 5
@@ -172,8 +171,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val maxSide = max(max(a, b), max(a, c))
     if (a + b + c - maxSide > maxSide) {
         return when {
-            a.pow(2.0) + b.pow(2.0) + c.pow(2.0) - maxSide.pow(2.0) < maxSide.pow(2.0) -> 2
-            a.pow(2.0) + b.pow(2.0) + c.pow(2.0) - maxSide.pow(2.0) > maxSide.pow(2.0) -> 0
+            a.pow(2.0) + b.pow(2.0) + c.pow(2.0) < 2 * maxSide.pow(2.0) -> 2
+            a.pow(2.0) + b.pow(2.0) + c.pow(2.0) > 2 * maxSide.pow(2.0) -> 0
             else -> 1
         }
     } else {
@@ -189,4 +188,26 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (c <= a) {
+        if (d >= a) {
+            return if (d <= b) {
+                d - a
+            } else {
+                return b - a
+            }
+        } else {
+            return -1
+        }
+    }
+    return if (c <= b) {
+        if (d <= b) {
+            d - c
+        } else {
+            b - c
+        }
+    } else {
+        -1
+    }
+
+}
