@@ -41,7 +41,9 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = (abs(x1 - x2) 
  */
 fun daysInMonth(month: Int, year: Int): Int {
     if (month < 8) {
-        if (month == 2) return if ((year % 4 == 0) && ((year % 400 == 0) && (year % 100 == 0))) 29 else 28
+        if (month == 2) {
+            return if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) 29 else 28
+        }
         return if (month % 2 == 0) 30 else 31
     } else return if (month % 2 == 0) 31 else 30
 }
@@ -56,7 +58,9 @@ fun daysInMonth(month: Int, year: Int): Int {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean {
+    return sqr(x1) + sqr(y1) <= sqr(r2)
+}
 
 /**
  * Средняя (3 балла)
