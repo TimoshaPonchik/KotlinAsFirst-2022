@@ -4,6 +4,8 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.min
+import kotlin.math.max
 
 /**
  * Пример
@@ -30,7 +32,8 @@ fun isNumberHappy(number: Int): Boolean =
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = (abs(x1 - x2) == abs(y1 - y2)) || (x1 == x2 || y1 == y2)
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (abs(x1 - x2) == abs(y1 - y2)) || (x1 == x2 || y1 == y2)
 
 
 /**
@@ -58,9 +61,8 @@ fun daysInMonth(month: Int, year: Int): Int {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean {
-    return sqr(x1) + sqr(y1) <= sqr(r2)
-}
+): Boolean = (r1 <= r2) && (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2 - r1))
+
 
 /**
  * Средняя (3 балла)
@@ -71,4 +73,5 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int):
+        Boolean = if (minOf(a, b, c) <= min(r, s)) (a + b + c - minOf(a, b, c) - maxOf(a, b, c)) <= max(r, s) else false
