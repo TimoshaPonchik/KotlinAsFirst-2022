@@ -49,7 +49,7 @@ fun gradeNotation(grade: Int): String = when (grade) {
 fun minBiRoot(a: Double, b: Double, c: Double): Double {
     // 1: в главной ветке if выполняется НЕСКОЛЬКО операторов
     if (a == 0.0) {
-        if (b == 0.0) return Double.NaN // ... и ничего больше не делать
+            if (b == 0.0) return Double.NaN // ... и ничего больше не делать
         val bc = -c / b
         if (bc < 0.0) return Double.NaN // ... и ничего больше не делать
         return -sqrt(bc)
