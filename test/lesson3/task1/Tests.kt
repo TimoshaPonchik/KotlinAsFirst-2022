@@ -70,6 +70,7 @@ class Tests {
         assertEquals(2, digitNumber(10))
         assertEquals(2, digitNumber(99))
         assertEquals(3, digitNumber(123))
+        assertEquals(2, digitNumber(15))
         assertEquals(10, digitNumber(Int.MAX_VALUE))
     }
 
@@ -91,7 +92,7 @@ class Tests {
     @Test
     @Tag("2")
     fun minDivisor() {
-            assertEquals(2, minDivisor(2))
+        assertEquals(2, minDivisor(2))
         assertEquals(3, minDivisor(75))
         assertEquals(5, minDivisor(75 / 3))
         assertEquals(97, minDivisor(97))
