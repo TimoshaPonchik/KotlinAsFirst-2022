@@ -167,6 +167,7 @@ class Tests {
         assertEquals(111, revert(111))
         assertEquals(17571, revert(17571))
         assertEquals(123456789, revert(987654321))
+        assertEquals(7463847412, revert(2147483647))
     }
 
     @Test
@@ -208,7 +209,7 @@ class Tests {
     fun cos() {
         assertEquals(1.0, cos(0.0, 1e-5), 1e-5)
         assertEquals(0.0, cos(PI / 2.0, 1e-5), 1e-5)
-        assertEquals(-1.0, cos(PI, 1e-5), 1e-5)
+        assertEquals(-1.0, cos(PI * 1, 1e-5), 1e-5)
         assertEquals(0.0, cos(3.0 * PI / 2.0, 1e-5), 1e-5)
         assertEquals(1.0, cos(100 * PI, 1e-5), 1e-5)
         assertNotEquals(kotlin.math.cos(1.0), cos(1.0, 1.0))

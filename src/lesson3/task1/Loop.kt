@@ -2,9 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.sqrt
-import kotlin.math.min
-import kotlin.math.max
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -125,10 +123,10 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var maxDivisor = 0
-    for (i in 1..sqrt(n.toDouble()).toInt() + 1) {
+    for (i in 1..n / 2 + 1) {
         if (n % i == 0 && i > maxDivisor) maxDivisor = i
     }
-    return (1)
+    return (maxDivisor)
 }
 
 
@@ -169,10 +167,12 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (i in 1..min(m, n)) {
-        if ((i * max(m, n)) % min(m, n) == 0) return (i * max(m, n))
+    var maxDiv = 0
+    if (m == n) maxDiv = m
+    else for (i in 1..min(m, n) / 2 + 1) {
+        if (m % i == 0 && n % i == 0) maxDiv = i
     }
-    return 0
+    return (m * n / maxDiv)
 }
 
 /**
@@ -196,7 +196,23 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var len = 0
+    var nTemp = n
+    while (nTemp != 0) {
+        nTemp /= 10
+        len += 1
+    }
+    nTemp = n
+    var nDelta = 0
+    var nReversed = 0
+    for (i in 1..len) {
+        nDelta = nTemp % 10
+        nReversed += nDelta * (10.0.pow(len - i)).toInt()
+        nTemp /= 10
+    }
+    return (nReversed)
+}
 
 /**
  * Средняя (3 балла)
@@ -207,7 +223,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -217,7 +233,24 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var len = 0
+    var nTemp = n
+    while (nTemp != 0) {
+        nTemp /= 10
+        len += 1
+    }
+    nTemp = n
+    var nDeltaNew = 0
+    val nDelta = nTemp % 10
+    for (i in 1..len) {
+        nDeltaNew = nTemp % 10
+        if (nDeltaNew != nDelta) return true
+        nDeltaNew = nTemp % 10
+        nTemp /= 10
+    }
+    return (false)
+}
 
 /**
  * Средняя (4 балла)
@@ -228,7 +261,21 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var xDiv = x
+    while (xDiv >= 2 * PI) xDiv -= 2 * PI
+    var num = 1
+    var negativeChange = -1
+    var sinSum = xDiv
+    var deltaSin = 100.0
+    while (deltaSin > abs(eps)) {
+        num += 2
+        deltaSin = xDiv.pow(num.toDouble()) / factorial(num)
+        sinSum += negativeChange * deltaSin
+        negativeChange *= -1
+    }
+    return ((sinSum * eps.pow(-1)).roundToInt() / (eps.pow(-1)))
+}
 
 /**
  * Средняя (4 балла)
@@ -239,7 +286,13 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var xDiv = x
+    while (xDiv >= 2 * PI) xDiv -= 2 * PI
+    var negativeChange = 1
+    if (xDiv < PI / -2 || xDiv > PI / 2) negativeChange = -1
+    return(negativeChange*sqrt((1 - sin(x, eps)).pow(2.0)))
+}
 
 /**
  * Сложная (4 балла)
