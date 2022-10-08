@@ -196,19 +196,28 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int {
+
+fun leng(n: Int): Int {
+    var x = n
     var len = 0
-    var nTemp = n
-    while (nTemp != 0) {
-        nTemp /= 10
+    while (x != 0) {
+        x /= 10
         len += 1
     }
-    nTemp = n
+    return (len)
+}
+
+fun revert(n: Int): Long {
+    var len = 0
+    var nTemp = n
+    len = leng(nTemp)
+    var nMulti: Long = 0
     var nDelta = 0
-    var nReversed = 0
+    var nReversed: Long = 0
     for (i in 1..len) {
         nDelta = nTemp % 10
-        nReversed += nDelta * (10.0.pow(len - i)).toInt()
+        nMulti = (10.0.pow(len - i)).toLong()
+        nReversed += nDelta * nMulti
         nTemp /= 10
     }
     return (nReversed)
@@ -223,7 +232,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = n == revert(n)
+fun isPalindrome(n: Int): Boolean = n.toLong() == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -233,20 +242,15 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean {
+    fun hasDifferentDigits(n: Int): Boolean {
     var len = 0
     var nTemp = n
-    while (nTemp != 0) {
-        nTemp /= 10
-        len += 1
-    }
-    nTemp = n
+    len = leng(nTemp)
     var nDeltaNew = 0
     val nDelta = nTemp % 10
     for (i in 1..len) {
         nDeltaNew = nTemp % 10
         if (nDeltaNew != nDelta) return true
-        nDeltaNew = nTemp % 10
         nTemp /= 10
     }
     return (false)
@@ -289,9 +293,17 @@ fun sin(x: Double, eps: Double): Double {
 fun cos(x: Double, eps: Double): Double {
     var xDiv = x
     while (xDiv >= 2 * PI) xDiv -= 2 * PI
-    var negativeChange = 1
-    if (xDiv < PI / -2 || xDiv > PI / 2) negativeChange = -1
-    return(negativeChange*sqrt((1 - sin(x, eps)).pow(2.0)))
+    var num = 0
+    var negativeChange = -1
+    var sinSum = 1.0
+    var deltaSin = 100.0
+    while (deltaSin > abs(eps)) {
+        num += 2
+        deltaSin = xDiv.pow(num.toDouble()) / factorial(num)
+        sinSum += negativeChange * deltaSin
+        negativeChange *= -1
+    }
+    return ((sinSum * eps.pow(-1)).roundToInt() / (eps.pow(-1)))
 }
 
 /**
@@ -303,7 +315,20 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var numCount = 0
+    var squareNum = 0
+    while (numCount < n) {
+        squareNum += 1
+        numCount += leng((squareNum.toDouble().pow(2)).toInt())
+    }
+    squareNum = (squareNum.toDouble().pow(2)).toInt()
+    while (n != numCount) {
+        squareNum /= 10
+        numCount--
+    }
+    return squareNum % 10
+}
 
 /**
  * Сложная (5 баллов)
@@ -314,4 +339,17 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var numCount = 0
+    var squareNum = 0
+    while (numCount < n) {
+        squareNum += 1
+        numCount += leng(fib(squareNum))
+    }
+    squareNum = fib(squareNum)
+    while (n != numCount) {
+        squareNum /= 10
+        numCount--
+    }
+    return squareNum % 10
+}
