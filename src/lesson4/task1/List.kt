@@ -219,7 +219,19 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String =
+fun convertToString(n: Int, base: Int): String {
+    println(n.toString(base))
+    val result = mutableListOf<Char>()
+    var mutableN = n
+    var divTempResult: Int
+    while (mutableN != 0) {
+        divTempResult = mutableN % base
+        if (divTempResult > 9) result.add(0, (divTempResult + 87).toChar())
+        else result.add(0, (divTempResult + 48).toChar())
+        mutableN /= base
+    }
+    return (result.joinToString(separator = ""))
+}
 
 /**
  * Средняя (3 балла)
@@ -242,7 +254,21 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+
+fun main() {
+    print('1'.toInt() - 48)
+}
+
+fun decimalFromString(str: String, base: Int): Int {
+    var mutableNSum = 0
+    var mutableNChanged: Int
+    for (i in 0 until str.length) {
+        mutableNChanged = if (str[i].toInt() in 97..122) 87 else 48
+        mutableNSum += ((str[i].toInt() - mutableNChanged) * base.toDouble()
+            .pow((str.length - 1) - i)).toInt()
+    }
+    return (mutableNSum)
+}
 
 /**
  * Сложная (5 баллов)
@@ -253,7 +279,6 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String = TODO()
-
 /**
  * Очень сложная (7 баллов)
  *
