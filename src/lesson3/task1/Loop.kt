@@ -251,8 +251,12 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun sin(x: Double, eps: Double): Double {
     var xDiv = x
+    var checker = 1
+    if (xDiv < 0) {
+        xDiv = -xDiv
+        checker = -1
+    }
     while (xDiv >= 2 * PI) xDiv -= 2 * PI
-    while (xDiv <= -2 * PI) xDiv += 2 * PI
     var num = 1
     var negativeChange = -1
     var sinSum = xDiv
@@ -263,7 +267,7 @@ fun sin(x: Double, eps: Double): Double {
         sinSum += negativeChange * deltaSin
         negativeChange *= -1
     }
-    val varRoundNum: Long = (sinSum * eps.pow(-1)).roundToLong()
+    val varRoundNum: Long = checker * (sinSum * eps.pow(-1)).roundToLong()
     val varRoundHelper = eps.pow(-1)
     return (varRoundNum / varRoundHelper)
 }
@@ -279,8 +283,8 @@ fun sin(x: Double, eps: Double): Double {
  */
 fun cos(x: Double, eps: Double): Double {
     var xDiv = x
+    if (xDiv < 0) xDiv = -xDiv
     while (xDiv >= 2 * PI) xDiv -= 2 * PI
-    while (xDiv <= -2 * PI) xDiv += 2 * PI
     var num = 0
     var negativeChange = -1
     var cosSum = 1.0
