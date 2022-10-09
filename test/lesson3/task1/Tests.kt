@@ -66,6 +66,7 @@ class Tests {
     @Tag("2")
     fun digitNumber() {
         assertEquals(1, digitNumber(0))
+        assertEquals(2, digitNumber(19))
         assertEquals(1, digitNumber(7))
         assertEquals(2, digitNumber(10))
         assertEquals(2, digitNumber(15))
@@ -202,6 +203,7 @@ class Tests {
         assertEquals(0.0, sin(PI, 1e-5), 1e-5)
         assertEquals(-1.0, sin(3.0 * PI / 2.0, 1e-5), 1e-5)
         assertEquals(0.0, sin(100 * PI, 1e-5), 1e-5)
+        assertEquals(0.0, sin(-18.84955592153876, 1e-10), 1e-10)
         assertNotEquals(kotlin.math.sin(1.0), sin(1.0, 1.0))
         assertNotEquals(kotlin.math.sin(-0.5), sin(-0.5, 1.0))
     }
@@ -215,6 +217,7 @@ class Tests {
         assertEquals(0.0, cos(3.0 * PI / 2.0, 1e-5), 1e-5)
         assertEquals(1.0, cos(100 * PI, 1e-5), 1e-5)
         assertEquals(-1.0, cos(-3 * PI, 1e-5), 1e-5)
+        assertEquals(1.0, cos(-6 * PI, 1e-10), 1e-10)
         assertNotEquals(kotlin.math.cos(1.0), cos(1.0, 1.0))
         assertNotEquals(kotlin.math.cos(0.5), cos(-0.5, 1.0))
     }

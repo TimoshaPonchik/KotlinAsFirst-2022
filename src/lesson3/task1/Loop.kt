@@ -208,11 +208,11 @@ fun leng(n: Int): Int {
 }
 
 fun revert(n: Int): Long {
-    var len = 0
+    val len: Int
     var nTemp = n
     len = leng(nTemp)
-    var nMulti: Long = 0
-    var nDelta = 0
+    var nMulti: Long
+    var nDelta: Int
     var nReversed: Long = 0
     for (i in 1..len) {
         nDelta = nTemp % 10
@@ -242,11 +242,10 @@ fun isPalindrome(n: Int): Boolean = n.toLong() == revert(n)
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-    fun hasDifferentDigits(n: Int): Boolean {
-    var len = 0
+fun hasDifferentDigits(n: Int): Boolean {
     var nTemp = n
-    len = leng(nTemp)
-    var nDeltaNew = 0
+    val len = leng(nTemp)
+    var nDeltaNew: Int
     val nDelta = nTemp % 10
     for (i in 1..len) {
         nDeltaNew = nTemp % 10
@@ -268,6 +267,7 @@ fun isPalindrome(n: Int): Boolean = n.toLong() == revert(n)
 fun sin(x: Double, eps: Double): Double {
     var xDiv = x
     while (xDiv >= 2 * PI) xDiv -= 2 * PI
+    while (xDiv <= -2 * PI) xDiv += 2 * PI
     var num = 1
     var negativeChange = -1
     var sinSum = xDiv
@@ -278,7 +278,7 @@ fun sin(x: Double, eps: Double): Double {
         sinSum += negativeChange * deltaSin
         negativeChange *= -1
     }
-    return ((sinSum * eps.pow(-1)).roundToInt() / (eps.pow(-1)))
+    return (sinSum.roundToInt().toDouble())
 }
 
 /**
@@ -293,17 +293,18 @@ fun sin(x: Double, eps: Double): Double {
 fun cos(x: Double, eps: Double): Double {
     var xDiv = x
     while (xDiv >= 2 * PI) xDiv -= 2 * PI
+    while (xDiv <= -2 * PI) xDiv += 2 * PI
     var num = 0
     var negativeChange = -1
-    var sinSum = 1.0
-    var deltaSin = 100.0
-    while (deltaSin > abs(eps)) {
+    var cosSum = 1.0
+    var deltaCos = 100.0
+    while (deltaCos > abs(eps)) {
         num += 2
-        deltaSin = xDiv.pow(num.toDouble()) / factorial(num)
-        sinSum += negativeChange * deltaSin
+        deltaCos = xDiv.pow(num.toDouble()) / factorial(num)
+        cosSum += negativeChange * deltaCos
         negativeChange *= -1
     }
-    return ((sinSum * eps.pow(-1)).roundToInt() / (eps.pow(-1)))
+    return (cosSum.roundToInt().toDouble())
 }
 
 /**
