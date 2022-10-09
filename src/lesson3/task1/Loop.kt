@@ -74,7 +74,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 
 fun digitNumber(n: Int): Int {
-    if (n <= 9) return 1
+    if (abs(n) <= 9) return 1
     return 1 + digitNumber(n / 10)
 }
 
@@ -118,11 +118,11 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var maxDivisor = 0
-    for (i in 1..n / 2 + 1) {
-        if (n % i == 0 && i > maxDivisor) maxDivisor = i
+    var maxDiv = 0
+    for (i in 1..n / 2) {
+        if (n % i == 0 && i > maxDiv) maxDiv = i
     }
-    return (maxDivisor)
+    return (maxDiv)
 }
 
 
@@ -263,7 +263,9 @@ fun sin(x: Double, eps: Double): Double {
         sinSum += negativeChange * deltaSin
         negativeChange *= -1
     }
-    return (sinSum.roundToInt().toDouble())
+    val varRoundNum: Long = (sinSum * eps.pow(-1)).roundToLong()
+    val varRoundHelper = eps.pow(-1)
+    return (varRoundNum / varRoundHelper)
 }
 
 /**
@@ -289,7 +291,9 @@ fun cos(x: Double, eps: Double): Double {
         cosSum += negativeChange * deltaCos
         negativeChange *= -1
     }
-    return (cosSum.roundToInt().toDouble())
+    val varRoundNum: Long = (cosSum * eps.pow(-1)).roundToLong()
+    val varRoundHelper = eps.pow(-1)
+    return (varRoundNum / varRoundHelper)
 }
 
 /**

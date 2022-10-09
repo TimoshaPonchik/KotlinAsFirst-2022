@@ -66,6 +66,7 @@ class Tests {
     @Tag("2")
     fun digitNumber() {
         assertEquals(1, digitNumber(0))
+        assertEquals(2, digitNumber(-16))
         assertEquals(2, digitNumber(19))
         assertEquals(1, digitNumber(7))
         assertEquals(2, digitNumber(10))
@@ -109,6 +110,7 @@ class Tests {
     @Tag("2")
     fun maxDivisor() {
         assertEquals(1, maxDivisor(17))
+        assertEquals(1, maxDivisor(2))
         assertEquals(2, maxDivisor(4))
         assertEquals(12, maxDivisor(24))
         assertEquals(59, maxDivisor(177))
@@ -217,6 +219,7 @@ class Tests {
         assertEquals(1.0, cos(100 * PI, 1e-5), 1e-5)
         assertEquals(-1.0, cos(-3 * PI, 1e-5), 1e-5)
         assertEquals(1.0, cos(-6 * PI, 1e-10), 1e-10)
+        assertEquals(0.9998476951604843, cos(-18.832102629018816, 1e-10), 1e-10)
         assertNotEquals(kotlin.math.cos(1.0), cos(1.0, 1.0))
         assertNotEquals(kotlin.math.cos(0.5), cos(-0.5, 1.0))
     }
