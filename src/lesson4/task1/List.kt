@@ -140,7 +140,12 @@ fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = (list.map { it - mean(list) }).toMutableList()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    mutableListOf<Int>()
+    val avgSize: Double = if (list.size != 0) list.sum() / list.size else 0.0
+    for (i in 0 until list.size) list[i] = list[i] - avgSize
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -220,10 +225,10 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    println(n.toString(base))
     val result = mutableListOf<Char>()
     var mutableN = n
     var divTempResult: Int
+    if (n == 0) result.add('1')
     while (mutableN != 0) {
         divTempResult = mutableN % base
         if (divTempResult > 9) result.add(0, (divTempResult + 87).toChar())
@@ -255,10 +260,6 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * (например, str.toInt(base)), запрещается.
  */
 
-fun main() {
-    print('1'.toInt() - 48)
-}
-
 fun decimalFromString(str: String, base: Int): Int {
     var mutableNSum = 0
     var mutableNChanged: Int
@@ -279,6 +280,7 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String = TODO()
+
 /**
  * Очень сложная (7 баллов)
  *
