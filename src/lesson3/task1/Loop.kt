@@ -74,14 +74,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 
 fun digitNumber(n: Int): Int {
-    var countDigit = 1
-    var number = n
-    while (number > 9) {
-        countDigit += 1
-        number /= 10
-    }
-    return countDigit
+    if (n <= 9) return 1
+    return 1 + digitNumber(n / 10)
 }
+
 
 /**
  * Простая (2 балла)
@@ -99,7 +95,7 @@ fun fib(n: Int): Int {
         fibNumberNew = fibNumberPrev + fibNumber
         fibNumberPrev = fibNumber
         fibNumber = fibNumberNew
-        number -= 1
+        number--
     }
     return fibNumberNew
 }
@@ -150,7 +146,7 @@ fun collatzSteps(x: Int): Int {
     var counterX = 0
     var xVariable = x
     while (xVariable != 1) {
-        counterX += 1
+        counterX++
         if (xVariable % 2 == 0) {
             xVariable /= 2
         } else {
@@ -197,26 +193,15 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 
-fun leng(n: Int): Int {
-    var x = n
-    var len = 0
-    while (x != 0) {
-        x /= 10
-        len += 1
-    }
-    return (len)
-}
-
-fun revert(n: Int): Long {
-    val len: Int
+fun revert(n: Int): Int {
     var nTemp = n
-    len = leng(nTemp)
-    var nMulti: Long
+    val len = digitNumber(nTemp)
+    var nMulti: Int
     var nDelta: Int
-    var nReversed: Long = 0
+    var nReversed = 0
     for (i in 1..len) {
         nDelta = nTemp % 10
-        nMulti = (10.0.pow(len - i)).toLong()
+        nMulti = (10.0.pow(len - i)).toInt()
         nReversed += nDelta * nMulti
         nTemp /= 10
     }
@@ -232,7 +217,7 @@ fun revert(n: Int): Long {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = n.toLong() == revert(n)
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -244,7 +229,7 @@ fun isPalindrome(n: Int): Boolean = n.toLong() == revert(n)
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var nTemp = n
-    val len = leng(nTemp)
+    val len = digitNumber(nTemp)
     var nDeltaNew: Int
     val nDelta = nTemp % 10
     for (i in 1..len) {
@@ -320,8 +305,8 @@ fun squareSequenceDigit(n: Int): Int {
     var numCount = 0
     var squareNum = 0
     while (numCount < n) {
-        squareNum += 1
-        numCount += leng((squareNum.toDouble().pow(2)).toInt())
+        squareNum++
+        numCount += digitNumber((squareNum.toDouble().pow(2)).toInt())
     }
     squareNum = (squareNum.toDouble().pow(2)).toInt()
     while (n != numCount) {
@@ -344,8 +329,8 @@ fun fibSequenceDigit(n: Int): Int {
     var numCount = 0
     var squareNum = 0
     while (numCount < n) {
-        squareNum += 1
-        numCount += leng(fib(squareNum))
+        squareNum++
+        numCount += digitNumber(fib(squareNum))
     }
     squareNum = fib(squareNum)
     while (n != numCount) {
