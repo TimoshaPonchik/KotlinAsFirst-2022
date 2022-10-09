@@ -228,7 +228,7 @@ fun convertToString(n: Int, base: Int): String {
     val result = mutableListOf<Char>()
     var mutableN = n
     var divTempResult: Int
-    if (n == 0) result.add('1')
+    if (n == 0) result.add('0')
     while (mutableN != 0) {
         divTempResult = mutableN % base
         if (divTempResult > 9) result.add(0, (divTempResult + 87).toChar())
