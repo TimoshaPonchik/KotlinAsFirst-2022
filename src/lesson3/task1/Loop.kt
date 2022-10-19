@@ -109,7 +109,7 @@ fun minDivisor(n: Int): Int {
     for (i in 2..sqrt(n.toDouble()).toInt() + 1) {
         if (n % i == 0) return i
     }
-    return (n)
+    return n
 }
 
 /**
@@ -117,13 +117,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var maxDiv = 0
-    for (i in 1..n / 2) {
-        if (n % i == 0 && i > maxDiv) maxDiv = i
-    }
-    return (maxDiv)
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 
 /**
@@ -179,10 +173,10 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in 2..max(m, n)) {
+    for (i in 2..min(m, n)) {
         if ((max(m, n) % i == 0) && (min(m, n) % i == 0)) return false
     }
-    return true
+    return true //другая концепция должна быть.. сложно понять
 }
 
 /**
