@@ -199,7 +199,7 @@ fun revert(n: Int): Int {
         nReversed += nDelta * nMulti
         nTemp /= 10
     }
-    return (nReversed)
+    return nReversed
 }
 
 /**
@@ -231,7 +231,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         if (nDeltaNew != nDelta) return true
         nTemp /= 10
     }
-    return (false)
+    return false
 }
 
 /**
@@ -250,7 +250,7 @@ fun sin(x: Double, eps: Double): Double {
         xDiv = -xDiv
         checker = -1
     }
-    while (xDiv >= 2 * PI) xDiv -= 2 * PI
+    if (xDiv >= 2 * PI) xDiv %= 2 * PI
     var num = 1
     var negativeChange = -1
     var sinSum = xDiv
@@ -263,7 +263,7 @@ fun sin(x: Double, eps: Double): Double {
     }
     val varRoundNum: Long = checker * (sinSum * eps.pow(-1)).roundToLong()
     val varRoundHelper = eps.pow(-1)
-    return (varRoundNum / varRoundHelper)
+    return varRoundNum / varRoundHelper
 }
 
 /**
@@ -278,7 +278,7 @@ fun sin(x: Double, eps: Double): Double {
 fun cos(x: Double, eps: Double): Double {
     var xDiv = x
     if (xDiv < 0) xDiv = -xDiv
-    while (xDiv >= 2 * PI) xDiv -= 2 * PI
+    if (xDiv >= 2 * PI) xDiv %= 2 * PI
     var num = 0
     var negativeChange = -1
     var cosSum = 1.0
@@ -291,7 +291,7 @@ fun cos(x: Double, eps: Double): Double {
     }
     val varRoundNum: Long = (cosSum * eps.pow(-1)).roundToLong()
     val varRoundHelper = eps.pow(-1)
-    return (varRoundNum / varRoundHelper)
+    return varRoundNum / varRoundHelper
 }
 
 /**
