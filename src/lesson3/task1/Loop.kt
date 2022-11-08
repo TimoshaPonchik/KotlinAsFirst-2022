@@ -261,7 +261,7 @@ fun sin(x: Double, eps: Double): Double {
         sinSum += negativeChange * deltaSin
         negativeChange *= -1
     }
-    val varRoundNum: Long = checker * (sinSum * eps.pow(-1)).roundToLong()
+    val varRoundNum: Long = checker * (sinSum * eps.pow(-1)).toLong()
     val varRoundHelper = eps.pow(-1)
     return varRoundNum / varRoundHelper
 }
@@ -289,7 +289,7 @@ fun cos(x: Double, eps: Double): Double {
         cosSum += negativeChange * deltaCos
         negativeChange *= -1
     }
-    val varRoundNum: Long = (cosSum * eps.pow(-1)).roundToLong()
+    val varRoundNum: Long = (cosSum * eps.pow(-1)).toLong()
     val varRoundHelper = eps.pow(-1)
     return varRoundNum / varRoundHelper
 }
