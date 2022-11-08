@@ -6,6 +6,7 @@ import lesson1.task1.discriminant
 import lesson3.task1.isCoPrime
 import lesson3.task1.isPrime
 import kotlin.math.pow
+import kotlin.math.*
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -174,7 +175,11 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    var sum = 0.0
+    for (i in 0 until p.size) sum += p[i] * x.toDouble().pow(i.toDouble())
+    return sum.toInt()
+}
 
 /**
  * Средняя (3 балла)
@@ -198,7 +203,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
 fun factorize(n: Int): List<Int> {
     val aMut = mutableListOf<Int>()
     var intMut = n
-    if(isPrime(n)) return listOf(n)
+    if (isPrime(n)) return listOf(n)
     while (intMut != 1)
         for (i in 1..intMut)
             if (intMut % i == 0 && isPrime(i)) {
@@ -295,11 +300,4 @@ fun decimalFromString(str: String, base: Int): Int {
  */
 fun roman(n: Int): String = TODO()
 
-/**
- * Очень сложная (7 баллов)
- *
- * Записать заданное натуральное число 1..999999 прописью по-русски.
- * Например, 375 = "триста семьдесят пять",
- * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
- */
 fun russian(n: Int): String = TODO()
