@@ -3,6 +3,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson3.task1.isCoPrime
+import lesson3.task1.isPrime
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -161,7 +163,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
     for (i in 0 until a.size) {
         sum += a[i] * b[i]
     }
-    return (sum)
+    return sum
 }
 
 /**
@@ -193,7 +195,19 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    val aMut = mutableListOf<Int>()
+    var intMut = n
+    if(isPrime(n)) return listOf(n)
+    while (intMut != 1)
+        for (i in 1..intMut)
+            if (intMut % i == 0 && isPrime(i)) {
+                aMut.add(i)
+                intMut /= i
+                break
+            }
+    return aMut.sorted()
+}
 
 /**
  * Сложная (4 балла)
@@ -202,7 +216,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя (3 балла)
@@ -235,7 +249,7 @@ fun convertToString(n: Int, base: Int): String {
         else result.add(0, (divTempResult + 48).toChar())
         mutableN /= base
     }
-    return (result.joinToString(separator = ""))
+    return result.joinToString(separator = "")
 }
 
 /**
@@ -268,7 +282,7 @@ fun decimalFromString(str: String, base: Int): Int {
         mutableNSum += ((str[i].toInt() - mutableNChanged) * base.toDouble()
             .pow((str.length - 1) - i)).toInt()
     }
-    return (mutableNSum)
+    return mutableNSum
 }
 
 /**

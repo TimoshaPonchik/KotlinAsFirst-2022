@@ -157,12 +157,13 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var maxDiv = 0
-    if (m == n) maxDiv = m
-    else for (i in 1..min(m, n) / 2 + 1) {
-        if (m % i == 0 && n % i == 0) maxDiv = i
+    var a = m
+    var b = n
+    while (a != 0 && b != 0) {
+        if (a > b) a %= b
+        else b %= a
     }
-    return (m * n / maxDiv)
+    return (m * n / (a + b))
 }
 
 /**
@@ -172,12 +173,7 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in 2..min(m, n)) {
-        if ((max(m, n) % i == 0) && (min(m, n) % i == 0)) return false
-    }
-    return true //другая концепция должна быть.. сложно понять
-}
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(n, m) == m * n
 
 /**
  * Средняя (3 балла)
