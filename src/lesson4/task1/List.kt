@@ -280,7 +280,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
     var powRes = 0
     for (i in (digits.size - 1) downTo 0) {
         resDig += digits[i] * base.toDouble().pow(powRes)
-        powRes +=1
+        powRes += 1
     }
     return resDig.toInt()
 }
@@ -317,8 +317,80 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
 
+fun roman(n: Int): String {
+    var nTemp = n
+    var strTemp = ""
+    while (nTemp != 0) {
+        when {
+            nTemp >= 1000 -> {
+                strTemp += "M"
+                nTemp -= 1000
+            }
+
+            nTemp >= 900 -> {
+                strTemp += "CM"
+                nTemp -= 900
+            }
+
+            nTemp >= 500 -> {
+                strTemp += "D"
+                nTemp -= 500
+            }
+
+            nTemp >= 400 -> {
+                strTemp += "CD"
+                nTemp -= 400
+            }
+
+            nTemp >= 100 -> {
+                strTemp += "C"
+                nTemp -= 100
+            }
+
+            nTemp >= 90 -> {
+                strTemp += "XC"
+                nTemp -= 90
+            }
+
+            nTemp >= 50 -> {
+                strTemp += "L"
+                nTemp -= 50
+            }
+
+            nTemp >= 40 -> {
+                strTemp += "XL"
+                nTemp -= 40
+            }
+
+            nTemp >= 10 -> {
+                strTemp += "X"
+                nTemp -= 10
+            }
+
+            nTemp >= 9 -> {
+                strTemp += "IX"
+                nTemp -= 9
+            }
+
+            nTemp >= 5 -> {
+                strTemp += "V"
+                nTemp -= 5
+            }
+
+            nTemp >= 4 -> {
+                strTemp += "IV"
+                nTemp -= 4
+            }
+
+            nTemp >= 1 -> {
+                strTemp += "I"
+                nTemp -= 1
+            }
+        }
+    }
+    return (strTemp)
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -327,4 +399,79 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+
+fun russianOne(n: Int): String {
+    return when (n) {
+        1 -> "один"
+        2 -> "два"
+        3 -> "три"
+        4 -> "четыре"
+        5 -> "пять"
+        6 -> "шесть"
+        7 -> "семь"
+        8 -> "восемь"
+        9 -> "девять"
+        else -> ""
+    }
+}
+
+fun russianTen(n: Int): String {
+    return when (n) {
+        10 -> "десять"
+        20 -> "двадцать"
+        30 -> "тридцать"
+        40 -> "сорок"
+        50 -> "пятьдесят"
+        60 -> "шестьдесят"
+        70 -> "семьдесят"
+        80 -> "восемьдесят"
+        90 -> "девяносто"
+        else -> ""
+    }
+}
+
+fun russianHundred(n: Int): String {
+    return when (n) {
+        100 -> "сто "
+        200 -> "двести"
+        300 -> "триста"
+        400 -> "четыреста"
+        else -> ""
+    }
+}
+
+fun russian(n: Int): String {
+    var rank = 10
+    var nTemp = n
+    val list = mutableListOf<Int>()
+    val listRus = mutableListOf<String>()
+    while (nTemp != 0) {
+        list.add(nTemp % rank)
+        nTemp -= nTemp % rank
+        rank *= 10
+    }
+
+    for (i in list.size - 1 downTo 0) {
+        if (list[i] in 1..9) {
+            listRus.add(russianOne(list[i]))
+        }
+        if (list[i] in 10..90) {
+            listRus.add(russianTen(list[i]))
+        }
+        if (list[i] in 100..400) {
+            listRus.add(russianHundred(list[i]))
+        }
+        if (list[i] in 500..900) {
+            listRus.add(russianHundred(list[i] / 100) + "сот")
+        }
+
+        if (list[i] in 1000..9000) {
+            listRus.add(russianOne(list[i] / 1000) + "тысяч")
+        }
+
+        if (list[i] in 10000..90000) {
+            listRus.add(russianTen(list[i] / 1000) + "тысяч")
+        }
+    }
+    return (listRus.joinToString(separator = " "))
+}
