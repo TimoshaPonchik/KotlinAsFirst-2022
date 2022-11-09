@@ -191,7 +191,10 @@ fun polynom(p: List<Int>, x: Int): Int {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    for (i in 1 until list.size) list[i] += list[i - 1]
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -230,7 +233,15 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var tempN = n
+    val digList = mutableListOf<Int>()
+    while (tempN != 0) {
+        digList.add(0, tempN % base)
+        tempN /= base
+    }
+    return digList
+}
 
 /**
  * Сложная (4 балла)
@@ -242,7 +253,7 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  *
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
- *///
+ */
 fun convertToString(n: Int, base: Int): String {
     val result = mutableListOf<Char>()
     var mutableN = n
@@ -264,7 +275,15 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var resDig = 0.0
+    var powRes = 0
+    for (i in (digits.size - 1) downTo 0) {
+        resDig += digits[i] * base.toDouble().pow(powRes)
+        powRes +=1
+    }
+    return resDig.toInt()
+}
 
 /**
  * Сложная (4 балла)
@@ -300,4 +319,12 @@ fun decimalFromString(str: String, base: Int): Int {
  */
 fun roman(n: Int): String = TODO()
 
+
+/**
+ * Очень сложная (7 баллов)
+ *
+ * Записать заданное натуральное число 1..999999 прописью по-русски.
+ * Например, 375 = "триста семьдесят пять",
+ * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
+ */
 fun russian(n: Int): String = TODO()
