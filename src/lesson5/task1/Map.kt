@@ -100,7 +100,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val gradesMap = mutableMapOf<Int, List<String>>()
     val mapStr = mutableListOf<String>()
-    for (i in 2..5) {
+    for (i in 0..5) {
         mapStr.clear()
         for ((key, value) in grades) {
             if (value == i) mapStr.add(key)
@@ -160,9 +160,9 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val c = mutableListOf<String>()
-    for (listA in a) if (listA in b) c.add(listA)
-    return c
+    val mapFin = mutableListOf<String>()
+    for (listA in a) if (listA in b) mapFin.add(listA)
+    return mapFin.toSet().toList()
 }
 
 /**
@@ -197,6 +197,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 
     for (i in numberSet) {
         if (mapA[i] != null && mapB[i] != null) numMap[i] = mapA[i] + ", " + mapB[i]
+        if (mapA[i] == mapB[i]) numMap[i] = mapA[i] + ""
         if (mapA[i] == null) numMap[i] = mapB[i] + ""
         if (mapB[i] == null) numMap[i] = mapA[i] + ""
     }
@@ -213,7 +214,15 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    var aaa = mutableMapOf<String, Double>()
+    var avgPrice = 0.0
+    for (i in stockPrices) {
+
+    }
+    println(aaa)
+    return mapOf()
+}
 
 /**
  * Средняя (4 балла)

@@ -183,6 +183,7 @@ class Tests {
     @Tag("3")
     fun convert() {
         assertEquals(listOf(1), convert(1, 2))
+        assertEquals(listOf(0), convert(0, 2))
         assertEquals(listOf(1, 2, 1, 0), convert(100, 4))
         assertEquals(listOf(1, 3, 12), convert(250, 14))
         assertEquals(listOf(2, 14, 12), convert(1000, 19))
@@ -233,6 +234,7 @@ class Tests {
     @Test
     @Tag("7")
     fun russian() {
+        assertEquals("пятьсот пять тысяч шестьсот двадцать четыре", russian(505624))
         assertEquals("триста семьдесят пять", russian(375))
         assertEquals("двадцать две тысячи девятьсот шестьдесят четыре", russian(22964))
         assertEquals("сто девятнадцать тысяч пятьсот восемь", russian(119508))

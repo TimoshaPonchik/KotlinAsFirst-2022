@@ -233,7 +233,8 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  */
 fun convert(n: Int, base: Int): List<Int> {
     var tempN = n
-    val digList = mutableListOf<Int>()
+    var digList = mutableListOf<Int>()
+    if (tempN == 0) digList.add(0)
     while (tempN != 0) {
         digList.add(0, tempN % base)
         tempN /= base
@@ -501,7 +502,7 @@ fun russian(n: Int): String {
 
         if (list[i] in 100000..900000) {
             listRus.add(0, russianHundred(list[i] / 1000))
-            if (list[i - 1] == 0) listRus.add(1, "тысяч")
+            if (list[i - 1] == 0 && list[i - 2] == 0) listRus.add(1, "тысяч")
         }
     }
     return (listRus.joinToString(separator = " "))
