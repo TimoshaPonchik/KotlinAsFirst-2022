@@ -3,10 +3,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import lesson3.task1.isCoPrime
 import lesson3.task1.isPrime
 import kotlin.math.pow
-import kotlin.math.*
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -430,15 +428,39 @@ fun russianTen(n: Int): String {
     }
 }
 
-fun russianHundred(n: Int): String {
+fun russianTenSec(n: Int): String {
     return when (n) {
-        100 -> "сто "
-        200 -> "двести"
-        300 -> "триста"
-        400 -> "четыреста"
+        1 -> "одиннадцать"
+        2 -> "двенадцать"
+        3 -> "тринадцать"
+        4 -> "четырнадцать"
+        5 -> "пятнадцать"
+        6 -> "шестнадцать"
+        7 -> "семьнадцать"
+        8 -> "восемьнадцать"
+        9 -> "девятнадцать"
         else -> ""
     }
 }
+
+fun russianHundred(n: Int): String {
+    return when (n) {
+        100 -> "сто"
+        200 -> "двести"
+        300 -> "триста"
+        400 -> "четыреста"
+        else -> russianOne(n / 100) + "сот"
+    }
+}
+
+fun russianOneHundreds(n: Int): String {
+    return when (n) {
+        1 -> "одна тысяча"
+        2 -> "две тысячи"
+        else -> russianOne(n) + " тысяч"
+    }
+}
+
 
 fun russian(n: Int): String {
     var rank = 10
@@ -451,26 +473,35 @@ fun russian(n: Int): String {
         rank *= 10
     }
 
-    for (i in list.size - 1 downTo 0) {
-        if (list[i] in 1..9) {
-            listRus.add(russianOne(list[i]))
-        }
-        if (list[i] in 10..90) {
-            listRus.add(russianTen(list[i]))
-        }
-        if (list[i] in 100..400) {
-            listRus.add(russianHundred(list[i]))
-        }
-        if (list[i] in 500..900) {
-            listRus.add(russianHundred(list[i] / 100) + "сот")
+    for (i in 0 until list.size) {
+        if (list[i] in 1..9 || list[i] in 10..90) {
+            if (list[i] in 1..9) {
+                if (list.size > 1 && list[i + 1] == 10) listRus.add(0, russianTenSec(list[i]))
+                else listRus.add(0, russianOne(list[i]))
+            }
+            if (list[i] in 20..90 || (list[i] == 10 && list[i - 1] !in 1..9)) {
+                listRus.add(0, russianTen(list[i]))
+            }
         }
 
-        if (list[i] in 1000..9000) {
-            listRus.add(russianOne(list[i] / 1000) + "тысяч")
+        if (list[i] in 100..900) {
+            listRus.add(0, russianHundred(list[i]))
         }
 
-        if (list[i] in 10000..90000) {
-            listRus.add(russianTen(list[i] / 1000) + "тысяч")
+        if (list[i] in 1000..9000 || list[i] in 10000..90000) {
+            if (list[i] in 1000..9000) {
+                if (list.size > 4 && list[i + 1] == 10000) listRus.add(0, russianTenSec(list[i] / 1000) + " тысяч")
+                else listRus.add(0, russianOneHundreds(list[i] / 1000))
+            }
+            if (list[i] in 20000..90000 || (list[i] == 10000 && list[i - 1] !in 1000..9000)) {
+                listRus.add(0, russianTen(list[i] / 1000))
+                if (list[i - 1] == 0) listRus.add(1, "тысяч")
+            }
+        }
+
+        if (list[i] in 100000..900000) {
+            listRus.add(0, russianHundred(list[i] / 1000))
+            if (list[i - 1] == 0) listRus.add(1, "тысяч")
         }
     }
     return (listRus.joinToString(separator = " "))
