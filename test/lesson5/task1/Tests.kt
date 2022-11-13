@@ -116,6 +116,12 @@ class Tests {
             buildGrades(mapOf("Марат" to 3, "Семён" to 3, "Михаил" to 3))
                 .mapValues { (_, v) -> v.sorted() }
         )
+
+        assertEquals(
+            mapOf(-356147932 to listOf("")),
+            buildGrades(mapOf("" to -356147932))
+                .mapValues { (_, v) -> v.sorted() }
+        )
     }
 
     @Test
@@ -235,6 +241,15 @@ class Tests {
         )
 
         assertEquals(
+            "a",
+            findCheapestStuff(
+                mapOf("" to ("" to 0.0), "a" to ("k" to 1.0)),
+                "k"
+            )
+        )
+
+
+        assertEquals(
             "",
             findCheapestStuff(
                 mapOf("" to ("" to 1.7976931348623157e+308)),
@@ -254,6 +269,7 @@ class Tests {
     @Tag("3")
     fun canBuildFrom() {
         assertFalse(canBuildFrom(emptyList(), "foo"))
+        assertTrue(canBuildFrom(emptyList(), ""))
         assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
         assertFalse(canBuildFrom(listOf('a', 'm', 'r'), "Marat"))
     }

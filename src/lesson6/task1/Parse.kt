@@ -76,6 +76,37 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String = TODO()
 
+/*{
+    val mapChange = mapOf<String, String>(
+        "января" to "01",
+        "февраля" to "02",
+        "марта" to "03",
+        "апреля" to "04",
+        "мая" to "05",
+        "июня" to "06",
+        "июля" to "07",
+        "вгуста" to "08",
+        "сентября" to "09",
+        "октября" to "10",
+        "ноября" to "11",
+        "декабря" to "12",
+    )
+    if (str.matches(
+            Regex(
+                """(\d){1,2} (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d\d\d\d)""".trimMargin()
+            )
+        )
+    ) {
+        var charList = ""
+        val list = str.split(" ")
+        charList += list[0] + "."
+        charList += mapChange[list[1]] + "."
+        charList += list[2]
+        return charList
+    }
+    return ""
+}
+*/
 /**
  * Средняя (4 балла)
  *

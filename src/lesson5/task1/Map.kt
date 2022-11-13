@@ -100,6 +100,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    if (grades.isEmpty()) return mapOf()
     val gradesMap = mutableMapOf<Int, List<String>>()
     val mapStr = mutableListOf<String>()
     for (i in (grades.values).min()..(grades.values).max()) {
@@ -251,7 +252,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var min = stuff.values.first().second
+    var min = 1.7976931348623157E308
     var minStr: String? = null
     for ((key, value) in stuff) {
         if (value.second <= min && value.first == kind) {
@@ -325,16 +326,15 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 
 fun hasAnagrams(words: List<String>): Boolean {
-    if (words.isNotEmpty()) {
-        val listChars = mutableListOf<Char>()
-        val name = words.first()
-        val strToArray = name.toCharArray()
-        for (element in strToArray) {
-            listChars.add(element)
-        }
-        for (nameCheck in words) {
-            if (canBuildFrom(listChars, nameCheck) && nameCheck != name && name.length == nameCheck.length) return true
-        }
+    if (words.isEmpty()) return true
+    val listChars = mutableListOf<Char>()
+    val name = words.first()
+    val strToArray = name.toCharArray()
+    for (element in strToArray) {
+        listChars.add(element)
+    }
+    for (nameCheck in words) {
+        if (canBuildFrom(listChars, nameCheck) && nameCheck != name && name.length == nameCheck.length) return true
     }
 
     return false
