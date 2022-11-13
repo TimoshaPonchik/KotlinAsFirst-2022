@@ -100,7 +100,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val gradesMap = mutableMapOf<Int, List<String>>()
     val mapStr = mutableListOf<String>()
-    for (i in 0..5) {
+    for (i in 1..5) {
         mapStr.clear()
         for ((key, value) in grades) {
             if (value == i) mapStr.add(key)
@@ -215,13 +215,22 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    var aaa = mutableMapOf<String, Double>()
-    var avgPrice = 0.0
-    for (i in stockPrices) {
-
+    val numMap = mutableMapOf<String, Double>()
+    var counter = 0
+    var sum = 0.0
+    for ((first1) in stockPrices) {
+        for ((first, second) in stockPrices) {
+            if (first1 == first) {
+                counter++
+                sum += second
+            }
+        }
+        numMap[first1] = sum / counter
+        counter = 0
+        sum = 0.0
     }
-    println(aaa)
-    return mapOf()
+
+    return numMap
 }
 
 /**
@@ -239,7 +248,17 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var min = 2147483647.0
+    var minStr: String? = null
+    for ((key, value) in stuff) {
+        if (value.second < min && value.first == kind) {
+            min = value.second
+            minStr = key
+        }
+    }
+    return minStr
+}
 
 /**
  * Средняя (3 балла)
@@ -250,7 +269,15 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    if (chars.isEmpty()) return false
+    for (letter in chars) {
+        if (letter !in word) {
+            return false
+        }
+    }
+    return true
+}
 
 /**
  * Средняя (4 балла)
@@ -264,7 +291,20 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    var counter = 0
+    val mapNum = mutableMapOf<String, Int>()
+    for (repeatLet in list) {
+        for (repeatLetSec in list) {
+            if (repeatLet == repeatLetSec) {
+                counter++
+            }
+        }
+        if (counter > 1) mapNum[repeatLet] = counter
+        counter = 0
+    }
+    return mapNum
+}
 
 /**
  * Средняя (3 балла)
@@ -278,7 +318,20 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+
+fun hasAnagrams(words: List<String>): Boolean {
+    val listChars = mutableListOf<Char>()
+    val name = words.first()
+    val strToArray = name.toCharArray()
+    for (element in strToArray) {
+        listChars.add(element)
+    }
+    for (nameCheck in words) {
+        if (canBuildFrom(listChars, nameCheck) && nameCheck != name && name.length == nameCheck.length) return true
+    }
+
+    return false
+}
 
 /**
  * Сложная (5 баллов)

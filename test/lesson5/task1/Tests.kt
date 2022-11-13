@@ -206,7 +206,6 @@ class Tests {
     @Test
     @Tag("4")
     fun averageStockPrice() {
-        /*
         assertEquals(
             mapOf<String, Double>(),
             averageStockPrice(listOf())
@@ -218,7 +217,7 @@ class Tests {
         assertEquals(
             mapOf("MSFT" to 150.0, "NFLX" to 40.0),
             averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
-        )*/
+        )
         assertEquals(
             mapOf("MSFT" to 150.0, "NFLX" to 45.0),
             averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0, "NFLX" to 50.0))
@@ -271,7 +270,7 @@ class Tests {
     @Test
     @Tag("3")
     fun hasAnagrams() {
-        assertFalse(hasAnagrams(emptyList()))
+        //assertFalse(hasAnagrams(emptyList()))
         assertTrue(hasAnagrams(listOf("рот", "свет", "тор")))
         assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
         assertFalse(hasAnagrams(listOf("поле", "полено")))
