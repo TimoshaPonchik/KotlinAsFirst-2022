@@ -233,6 +233,14 @@ class Tests {
                 "торт"
             )
         )
+
+        assertEquals(
+            "",
+            findCheapestStuff(
+                mapOf("" to ("" to 1.7976931348623157e+308)),
+                ""
+            )
+        )
         assertEquals(
             "Мария",
             findCheapestStuff(
@@ -270,7 +278,8 @@ class Tests {
     @Test
     @Tag("3")
     fun hasAnagrams() {
-        //assertFalse(hasAnagrams(emptyList()))
+        assertFalse(hasAnagrams(emptyList()))
+        assertFalse(hasAnagrams(listOf("", "")))
         assertTrue(hasAnagrams(listOf("рот", "свет", "тор")))
         assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
         assertFalse(hasAnagrams(listOf("поле", "полено")))

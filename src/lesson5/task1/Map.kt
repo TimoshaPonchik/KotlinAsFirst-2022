@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.math.min
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -100,7 +102,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val gradesMap = mutableMapOf<Int, List<String>>()
     val mapStr = mutableListOf<String>()
-    for (i in 1..5) {
+    for (i in (grades.values).min()..(grades.values).max()) {
         mapStr.clear()
         for ((key, value) in grades) {
             if (value == i) mapStr.add(key)
@@ -249,10 +251,10 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var min = 2147483647.0
+    var min = stuff.values.first().second
     var minStr: String? = null
     for ((key, value) in stuff) {
-        if (value.second < min && value.first == kind) {
+        if (value.second <= min && value.first == kind) {
             min = value.second
             minStr = key
         }
@@ -270,7 +272,10 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    if (chars.isEmpty()) return false
+    if (chars.isEmpty()) {
+        if (word.isEmpty()) return true
+        return false
+    }
     for (letter in chars) {
         if (letter !in word) {
             return false
@@ -320,14 +325,16 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 
 fun hasAnagrams(words: List<String>): Boolean {
-    val listChars = mutableListOf<Char>()
-    val name = words.first()
-    val strToArray = name.toCharArray()
-    for (element in strToArray) {
-        listChars.add(element)
-    }
-    for (nameCheck in words) {
-        if (canBuildFrom(listChars, nameCheck) && nameCheck != name && name.length == nameCheck.length) return true
+    if (words.isNotEmpty()) {
+        val listChars = mutableListOf<Char>()
+        val name = words.first()
+        val strToArray = name.toCharArray()
+        for (element in strToArray) {
+            listChars.add(element)
+        }
+        for (nameCheck in words) {
+            if (canBuildFrom(listChars, nameCheck) && nameCheck != name && name.length == nameCheck.length) return true
+        }
     }
 
     return false
