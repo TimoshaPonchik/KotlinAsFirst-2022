@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,10 +76,8 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
-
-/*{
-    val mapChange = mapOf<String, String>(
+fun dateStrToDigit(str: String): String {
+    val mapChange = mapOf<  String, String>(
         "января" to "01",
         "февраля" to "02",
         "марта" to "03",
@@ -93,20 +93,21 @@ fun dateStrToDigit(str: String): String = TODO()
     )
     if (str.matches(
             Regex(
-                """(\d){1,2} (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d\d\d\d)""".trimMargin()
+                """(\d|\d\d) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d\d\d\d)""".trimMargin()
             )
         )
     ) {
-        var charList = ""
-        val list = str.split(" ")
-        charList += list[0] + "."
-        charList += mapChange[list[1]] + "."
-        charList += list[2]
-        return charList
+        val listStr = str.split(" ")
+        if (mapChange.contains(listStr[1])) {
+            if (listStr[0].toInt() <= daysInMonth(mapChange[listStr[1]]!!.toInt(), listStr[2].toInt())) {
+                return if (listStr[0].toInt() in 1..9) "0${listStr[0]}.${mapChange[listStr[1]]}.${listStr[2]}"
+                else "${listStr[0]}.${mapChange[listStr[1]]}.${listStr[2]}"
+            }
+        }
     }
     return ""
 }
-*/
+
 /**
  * Средняя (4 балла)
  *
