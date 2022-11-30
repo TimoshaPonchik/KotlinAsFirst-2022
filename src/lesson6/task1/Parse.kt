@@ -77,7 +77,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val mapChange = mapOf<  String, String>(
+    val mapChange = mapOf<String, String>(
         "января" to "01",
         "февраля" to "02",
         "марта" to "03",

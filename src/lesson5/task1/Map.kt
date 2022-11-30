@@ -2,7 +2,7 @@
 
 package lesson5.task1
 
-import kotlin.math.min
+import java.lang.Byte.MIN_VALUE
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -145,13 +145,8 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    val matList = mutableListOf<String>()
-    for ((key) in a) {
-        if (a[key] == b[key]) matList.add(key)
-    }
-
-    for (name in matList) {
-        a.remove(name)
+    for ((key) in b) {
+        if (a[key] == b[key]) a.remove(key)
     }
 }
 
@@ -162,11 +157,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val mapFin = mutableListOf<String>()
-    for (listA in a) if (listA in b) mapFin.add(listA)
-    return mapFin.toSet().toList()
-}
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().intersect(b.toSet()).toList()
 
 /**
  * Средняя (3 балла)
@@ -196,13 +187,12 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     for ((key) in mapB) {
         number.add(key)
     }
-    val numberSet: List<String> = number.toSet().toList()
 
-    for (i in numberSet) {
+    for (i in number) {
         if (mapA[i] != null && mapB[i] != null) numMap[i] = mapA[i] + ", " + mapB[i]
-        if (mapA[i] == mapB[i]) numMap[i] = mapA[i] + ""
-        if (mapA[i] == null) numMap[i] = mapB[i] + ""
-        if (mapB[i] == null) numMap[i] = mapA[i] + ""
+        if (mapA[i] == mapB[i]) numMap[i] = mapA[i].toString()
+        if (mapA[i] == null) numMap[i] = mapB[i].toString()
+        if (mapB[i] == null) numMap[i] = mapA[i].toString()
     }
     return numMap
 }
@@ -252,11 +242,11 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var min = 1.7976931348623157E308
+    var min = MIN_VALUE
     var minStr: String? = null
     for ((key, value) in stuff) {
         if (value.second <= min && value.first == kind) {
-            min = value.second
+            min = value.second.toInt().toByte()
             minStr = key
         }
     }
@@ -272,18 +262,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    if (chars.isEmpty()) {
-        if (word.isEmpty()) return true
-        return false
-    }
-    for (letter in chars) {
-        if (letter !in word) {
-            return false
-        }
-    }
-    return true
-}
+fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.toSet() == chars.toSet()
 
 /**
  * Средняя (4 балла)
@@ -298,16 +277,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    var counter = 0
     val mapNum = mutableMapOf<String, Int>()
-    for (repeatLet in list) {
-        for (repeatLetSec in list) {
-            if (repeatLet == repeatLetSec) {
-                counter++
-            }
-        }
-        if (counter > 1) mapNum[repeatLet] = counter
-        counter = 0
+    val result = list.filter { x -> list.count { it == x } > 1 }
+    for (element in result.toSet()) {
+        mapNum[element] = result.count { it == element }
     }
     return mapNum
 }
@@ -326,17 +299,11 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 
 fun hasAnagrams(words: List<String>): Boolean {
-    if (words.isEmpty()) return true
-    val listChars = mutableListOf<Char>()
-    val name = words.first()
-    val strToArray = name.toCharArray()
-    for (element in strToArray) {
-        listChars.add(element)
+    for (element in words) {
+        if (words.first() != element && words.first()
+                .toSet() == element.toSet() && words.first().length == element.length
+        ) return true
     }
-    for (nameCheck in words) {
-        if (canBuildFrom(listChars, nameCheck) && nameCheck != name && name.length == nameCheck.length) return true
-    }
-
     return false
 }
 

@@ -4,7 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson3.task1.isPrime
-import kotlin.math.pow
+import kotlin.math.*
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -142,8 +142,7 @@ fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    mutableListOf<Int>()
-    val avgSize: Double = if (list.size != 0) list.sum() / list.size else 0.0
+    val avgSize = mean(list)
     for (i in 0 until list.size) list[i] = list[i] - avgSize
     return list
 }
@@ -156,8 +155,6 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
-    a.toTypedArray()
-    b.toTypedArray()
     var sum = 0
     for (i in 0 until a.size) {
         sum += a[i] * b[i]
@@ -173,11 +170,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
-    var sum = 0.0
-    for (i in 0 until p.size) sum += p[i] * x.toDouble().pow(i.toDouble())
-    return sum.toInt()
-}
+fun polynom(p: List<Int>, x: Int): Int = (p.mapIndexed { index, it -> it * x.toDouble().pow(index).toInt() }).sum()
 
 /**
  * Средняя (3 балла)
@@ -204,15 +197,15 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     val aMut = mutableListOf<Int>()
     var intMut = n
+    var i = 2
     if (isPrime(n)) return listOf(n)
-    while (intMut != 1)
-        for (i in 1..intMut)
-            if (intMut % i == 0 && isPrime(i)) {
-                aMut.add(i)
-                intMut /= i
-                break
-            }
-    return aMut.sorted()
+    while (intMut != 1 && i <= intMut) {
+        if (intMut % i == 0) {
+            aMut.add(i)
+            intMut /= i
+        } else i += 1
+    }
+    return aMut
 }
 
 /**
@@ -233,13 +226,13 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  */
 fun convert(n: Int, base: Int): List<Int> {
     var tempN = n
-    var digList = mutableListOf<Int>()
+    val digList = mutableListOf<Int>()
     if (tempN == 0) digList.add(0)
     while (tempN != 0) {
-        digList.add(0, tempN % base)
+        digList.add(tempN % base)
         tempN /= base
     }
-    return digList
+    return digList.reversed()
 }
 
 /**
@@ -253,6 +246,9 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
+
+
+
 fun convertToString(n: Int, base: Int): String {
     val result = mutableListOf<Char>()
     var mutableN = n
@@ -260,11 +256,11 @@ fun convertToString(n: Int, base: Int): String {
     if (n == 0) result.add('0')
     while (mutableN != 0) {
         divTempResult = mutableN % base
-        if (divTempResult > 9) result.add(0, (divTempResult + 87).toChar())
-        else result.add(0, (divTempResult + 48).toChar())
+        if (divTempResult > 9) result.add((divTempResult + 'a'.code - 10).toChar())
+        else result.add((divTempResult + '9'.code - 9).toChar())
         mutableN /= base
     }
-    return result.joinToString(separator = "")
+    return result.reversed().joinToString(separator = "")
 }
 
 /**
@@ -301,8 +297,8 @@ fun decimalFromString(str: String, base: Int): Int {
     var mutableNSum = 0
     var mutableNChanged: Int
     for (i in 0 until str.length) {
-        mutableNChanged = if (str[i].toInt() in 97..122) 87 else 48
-        mutableNSum += ((str[i].toInt() - mutableNChanged) * base.toDouble()
+        mutableNChanged = if (str[i].code in 'a'.code..'z'.code) 'a'.code - 10 else '9'.code - 9
+        mutableNSum += ((str[i].code - mutableNChanged) * base.toDouble()
             .pow((str.length - 1) - i)).toInt()
     }
     return mutableNSum

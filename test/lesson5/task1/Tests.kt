@@ -165,6 +165,7 @@ class Tests {
             emptyList<String>(),
             whoAreInBoth(listOf("Marat", "Mikhail"), listOf("Sveta", "Kirill"))
         )
+
     }
 
     @Test
@@ -285,6 +286,12 @@ class Tests {
             mapOf("a" to 2),
             extractRepeats(listOf("a", "b", "a"))
         )
+
+        assertEquals(
+            mapOf("a" to 2, "c" to 3),
+            extractRepeats(listOf("a", "b", "c", "a", "c", "c"))
+        )
+
         assertEquals(
             emptyMap<String, Int>(),
             extractRepeats(listOf("a", "b", "c"))
