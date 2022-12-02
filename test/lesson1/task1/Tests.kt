@@ -47,6 +47,22 @@ class Tests {
     }
 
     @Test
+    @Tag("Example")
+    fun myFun() {
+        assertEquals(
+            listOf("Lux", "Fast and cheap"),
+            myFun(
+                listOf(
+                    "FastAndCheap: кот - 25000; собака - 30000; шиншилла - 5000;",
+                    "SuperCats: кот - 100000;",
+                    "Lux: кот - 1000000; собака - 1000000; крыса - 1000000; корова - 1000000; бегемот - 1000000;"
+                ), listOf("кот", "собака"), 20000000
+            )
+        )
+    }
+
+
+    @Test
     @Tag("3")
     fun seconds() {
         assertEquals(30035, seconds(8, 20, 35))

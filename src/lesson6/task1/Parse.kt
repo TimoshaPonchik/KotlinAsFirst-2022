@@ -174,8 +174,8 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 
+fun bestLongJump(jumps: String): Int = TODO()
 /*
-fun bestLongJump(jumps: String): Int {
     var max = 0
     if (jumps.matches(Regex("""\d""".trimMargin()))) {
         val formStr = Regex("""\d""").findAll(jumps, 0)
@@ -185,8 +185,8 @@ fun bestLongJump(jumps: String): Int {
     }
     //if (formStr.matches(Regex("""(\+)?(\d)+(\((\d)+\))?(\d)+""".trimMargin()))) return 0
     return -1
-}
 */
+
 
 /**
  * Сложная (6 баллов)

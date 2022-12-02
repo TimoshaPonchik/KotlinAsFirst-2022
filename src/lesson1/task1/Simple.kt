@@ -3,6 +3,7 @@
 package lesson1.task1
 
 import lesson3.task1.revert
+import java.lang.IllegalArgumentException
 import kotlin.math.*
 
 // Урок 1: простые функции
@@ -54,10 +55,29 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
 /**
  * Пример главной функции
  */
-fun main() {
-    val x1x2 = angleInRadian(0, 17, 0)
-    print(x1x2)
+
+fun myFun(movers: List<String>, pets: List<String>, limit: Int): Collection<Any> {
+    val result = mutableMapOf<String, Int>()
+    var cost = limit
+    for (checkMovers in movers) {
+        if (!checkMovers.matches(Regex("""[a-zA-Zа-яА-Я]+:( [a-zA-Zа-яА-Я]+ - \d+;)+"""))) throw IllegalArgumentException()
+        var a = Regex("""[:;]""").split(checkMovers)
+        var company = a[0].trim()
+        for (i in 1 until (a.size) - 1) {
+            var animal = a[i].split("-").first().trim()
+            var price = a[i].split("-").last().trim().toInt()
+            result[animal] = price
+        }
+
+        for (ii in 0 until pets.size) {
+            if (pets[ii] in result) {
+            } else break
+        }
+    }
+    var aasa = mutableListOf<String>()
+    return aasa
 }
+
 
 /**
  * Тривиальная (3 балла).
