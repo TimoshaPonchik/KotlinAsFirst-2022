@@ -77,7 +77,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val mapChange = mapOf<String, String>(
+    val mapChange = mapOf(
         "января" to "01",
         "февраля" to "02",
         "марта" to "03",
@@ -93,16 +93,13 @@ fun dateStrToDigit(str: String): String {
     )
     if (str.matches(
             Regex(
-                """(\d|\d\d) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d\d\d\d)""".trimMargin()
+                """(\d{1,2}) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d\d\d\d)""".trimMargin()
             )
         )
     ) {
         val listStr = str.split(" ")
-        if (mapChange.contains(listStr[1])) {
-            if (listStr[0].toInt() <= daysInMonth(mapChange[listStr[1]]!!.toInt(), listStr[2].toInt())) {
-                return if (listStr[0].toInt() in 1..9) "0${listStr[0]}.${mapChange[listStr[1]]}.${listStr[2]}"
-                else "${listStr[0]}.${mapChange[listStr[1]]}.${listStr[2]}"
-            }
+        if (listStr[0].toInt() <= daysInMonth(mapChange[listStr[1]]!!.toInt(), listStr[2].toInt())) {
+            return "${twoDigitStr(listStr[0].toInt())}.${mapChange[listStr[1]]}.${listStr[2]}"
         }
     }
     return ""
@@ -118,7 +115,30 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val mapChange = mapOf(
+        "01" to "января",
+        "02" to "февраля",
+        "03" to "марта",
+        "04" to "апреля",
+        "05" to "мая",
+        "06" to "июня",
+        "07" to "июля",
+        "08" to "августа",
+        "09" to "сентября",
+        "10" to "октября",
+        "11" to "ноября",
+        "12" to "декабря",
+    )
+
+    if (digital.matches(Regex("""(\d\d)\.(\d\d)\.(\d\d\d\d)""".trimMargin()))) {
+        val listStr = digital.split(".")
+        if (listStr[1] in mapChange && listStr[0].toInt() <= daysInMonth(listStr[1].toInt(), listStr[2].toInt())) {
+            return "${listStr[0].toInt()} ${mapChange[listStr[1]]} ${listStr[2]}"
+        }
+    }
+    return ""
+}
 
 /**
  * Средняя (4 балла)
@@ -134,7 +154,14 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val formStr = Regex("""[ -]""").replace(phone, "")
+    if (formStr.matches(Regex("""(\+)?(\d)+(\((\d)+\))?(\d)+""".trimMargin()))) return Regex("""[()]""").replace(
+        formStr,
+        ""
+    )
+    return ""
+}
 
 /**
  * Средняя (5 баллов)
@@ -146,7 +173,20 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+
+/*
+fun bestLongJump(jumps: String): Int {
+    var max = 0
+    if (jumps.matches(Regex("""\d""".trimMargin()))) {
+        val formStr = Regex("""\d""").findAll(jumps, 0)
+        for (a in formStr) {
+            println(a.groupValues.drop(1))
+        }
+    }
+    //if (formStr.matches(Regex("""(\+)?(\d)+(\((\d)+\))?(\d)+""".trimMargin()))) return 0
+    return -1
+}
+*/
 
 /**
  * Сложная (6 баллов)
