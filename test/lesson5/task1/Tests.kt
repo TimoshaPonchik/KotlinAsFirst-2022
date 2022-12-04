@@ -235,12 +235,20 @@ class Tests {
     @Test
     @Tag("4")
     fun findCheapestStuff() {
+        assertEquals(
+            "",
+            findCheapestStuff(
+                mapOf("" to ("" to 0.0)),
+                ""
+            )
+        )
         assertNull(
             findCheapestStuff(
                 mapOf("Мария" to ("печенье" to 20.0), "Орео" to ("печенье" to 100.0)),
                 "торт"
             )
         )
+
 
         assertEquals(
             "a",
@@ -270,6 +278,7 @@ class Tests {
     @Test
     @Tag("3")
     fun canBuildFrom() {
+        assertTrue(canBuildFrom(listOf('a'), ""))
         assertFalse(canBuildFrom(emptyList(), "foo"))
         assertTrue(canBuildFrom(emptyList(), ""))
         assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
@@ -303,8 +312,9 @@ class Tests {
     @Tag("3")
     fun hasAnagrams() {
         assertFalse(hasAnagrams(emptyList()))
-        assertFalse(hasAnagrams(listOf("", "")))
+        assertTrue(hasAnagrams(listOf("", "")))
         assertTrue(hasAnagrams(listOf("рот", "свет", "тор")))
+        assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
         assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
         assertFalse(hasAnagrams(listOf("поле", "полено")))
         assertTrue(hasAnagrams(listOf("лунь", "нуль")))

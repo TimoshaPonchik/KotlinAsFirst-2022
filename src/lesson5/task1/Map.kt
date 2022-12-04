@@ -2,7 +2,7 @@
 
 package lesson5.task1
 
-import java.lang.Byte.MIN_VALUE
+import java.lang.Double.MAX_VALUE
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -212,7 +212,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     for ((first) in stockPrices) {
         numMap[first] =
             stockPrices.filter { it.first == first }.sumOf { it.second } / stockPrices.count { it.first == first }
-}
+    }
     return numMap
 }
 
@@ -232,11 +232,11 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var min = MIN_VALUE
+    var min = MAX_VALUE
     var minStr: String? = null
     for ((key, value) in stuff) {
         if (value.second <= min && value.first == kind) {
-            min = value.second.toInt().toByte()
+            min = value.second
             minStr = key
         }
     }
@@ -252,7 +252,8 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.toSet() == chars.toSet()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean =
+    chars.toSet().intersect(word.toLowerCase().toSet()) == word.toSet()
 
 /**
  * Средняя (4 балла)
@@ -289,8 +290,8 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 
 fun hasAnagrams(words: List<String>): Boolean {
-    for (element in words) {
-        if (words.first() != element && words.first()
+    for ((counter, element) in words.withIndex()) {
+        if (counter > 0 && words.first()
                 .toSet() == element.toSet() && words.first().length == element.length
         ) return true
     }

@@ -93,7 +93,7 @@ fun dateStrToDigit(str: String): String {
     )
     if (str.matches(
             Regex(
-                """(\d{1,2}) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d\d\d\d)""".trimMargin()
+                """(\d{1,2}) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d){1,4}""".trimMargin()
             )
         )
     ) {
@@ -131,7 +131,7 @@ fun dateDigitToStr(digital: String): String {
         "12" to "декабря",
     )
 
-    if (digital.matches(Regex("""(\d\d)\.(\d\d)\.(\d\d\d\d)""".trimMargin()))) {
+    if (digital.matches(Regex("""(\d\d)\.(\d\d)\.(\d){1,4}""".trimMargin()))) {
         val listStr = digital.split(".")
         if (listStr[1] in mapChange && listStr[0].toInt() <= daysInMonth(listStr[1].toInt(), listStr[2].toInt())) {
             return "${listStr[0].toInt()} ${mapChange[listStr[1]]} ${listStr[2]}"
@@ -174,19 +174,11 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 
-fun bestLongJump(jumps: String): Int = TODO()
-/*
-    var max = 0
-    if (jumps.matches(Regex("""\d""".trimMargin()))) {
-        val formStr = Regex("""\d""").findAll(jumps, 0)
-        for (a in formStr) {
-            println(a.groupValues.drop(1))
-        }
-    }
-    //if (formStr.matches(Regex("""(\+)?(\d)+(\((\d)+\))?(\d)+""".trimMargin()))) return 0
-    return -1
-*/
+fun bestLongJump(jumps: String): Int {
+    if (!Regex("""[\d \-%]""").matches(jumps)) return -1
 
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
