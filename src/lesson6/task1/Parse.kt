@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -85,7 +86,7 @@ fun dateStrToDigit(str: String): String {
         "мая" to "05",
         "июня" to "06",
         "июля" to "07",
-        "вгуста" to "08",
+        "августа" to "08",
         "сентября" to "09",
         "октября" to "10",
         "ноября" to "11",
@@ -93,7 +94,7 @@ fun dateStrToDigit(str: String): String {
     )
     if (str.matches(
             Regex(
-                """(\d{1,2}) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d){1,4}""".trimMargin()
+                """(\d{1,2}) (января|сентября|октября|ноября|декабря|февраля|марта|апреля|мая|июня|июля|августа) (\d)+""".trimMargin()
             )
         )
     ) {
@@ -131,7 +132,7 @@ fun dateDigitToStr(digital: String): String {
         "12" to "декабря",
     )
 
-    if (digital.matches(Regex("""(\d\d)\.(\d\d)\.(\d){1,4}""".trimMargin()))) {
+    if (digital.matches(Regex("""(\d\d)\.(\d\d)\.(\d)+""".trimMargin()))) {
         val listStr = digital.split(".")
         if (listStr[1] in mapChange && listStr[0].toInt() <= daysInMonth(listStr[1].toInt(), listStr[2].toInt())) {
             return "${listStr[0].toInt()} ${mapChange[listStr[1]]} ${listStr[2]}"
@@ -175,9 +176,9 @@ fun flattenPhoneNumber(phone: String): String {
  */
 
 fun bestLongJump(jumps: String): Int {
-    if (!Regex("""[\d \-%]""").matches(jumps)) return -1
-
-    return -1
+    if (!Regex("""([-%\d]+( )?)+""").matches(jumps) || !jumps.contains(Regex("""\d+"""))) return -1
+    val jumpList = Regex("""[-% ]+""").split(jumps).dropLastWhile { it == "" }
+    return jumpList.map { it.toInt() }.reduce { prev, curr -> if (prev > curr) prev else curr }
 }
 
 /**
@@ -191,7 +192,12 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!Regex("""([-%+\d]+( )?)+""").matches(jumps) || !jumps.contains(Regex("""\d+"""))) return -1
+    val jumpList = Regex("""\d+ %?\+""").findAll(jumps).map { it.groupValues[0] }.joinToString()
+    val jumpFiltered = Regex("""[ %+]""").replace(jumpList, "").split(",")
+    return jumpFiltered.map { it.toInt() }.reduce { prev, curr -> if (prev > curr) prev else curr }
+}
 
 /**
  * Сложная (6 баллов)
@@ -202,7 +208,21 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (!Regex("""(\d+)( [+-] \d+)*""").matches(expression)) throw IllegalArgumentException()
+    val listValues = Regex("""\d+""").findAll(expression).map { it.groupValues[0] }.toList()
+    val listSigns = Regex("""[+-]""").findAll(expression).map { it.groupValues[0] }.toList()
+    var result = listValues[0].toInt()
+    for (i in 1 until listValues.size) {
+        if (listSigns[i - 1] == "+") {
+            result += listValues[i].toInt()
+        }
+        if (listSigns[i - 1] == "-") {
+            result -= listValues[i].toInt()
+        }
+    }
+    return result
+}
 
 /**
  * Сложная (6 баллов)
@@ -213,7 +233,11 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val temporaryCheck = Regex("""([А-Яа-я]+)\s\1\s""").find(str.toLowerCase())
+    return if (temporaryCheck != null) Regex("""([А-Яа-я]+)\s\1\s""").find(str.toLowerCase())!!.range.first
+    else -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -226,7 +250,14 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    if (!Regex("""([а-яА-Я]+ \d+(.\d+)?(; )?)+""").matches(description)) return ""
+    val a =
+        description.split("; ").map { sub -> sub.substring(0).split(" ") }
+            .associate { it.last().toDouble() to it.first() }
+    val key = a.keys.max()
+    return a[key]!!
+}
 
 /**
  * Сложная (6 баллов)

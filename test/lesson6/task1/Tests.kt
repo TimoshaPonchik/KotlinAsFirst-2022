@@ -35,6 +35,7 @@ class Tests {
     @Tag("4")
     fun dateStrToDigit() {
         assertEquals("01.01.1", dateStrToDigit("01 января 1"))
+        assertEquals("01.08.1", dateStrToDigit("01 августа 1"))
         assertEquals("15.07.2016", dateStrToDigit("15 июля 2016"))
         assertEquals("", dateStrToDigit("3 мартобря 1918"))
         assertEquals("18.11.2018", dateStrToDigit("18 ноября 2018"))
@@ -48,6 +49,7 @@ class Tests {
     @Tag("4")
     fun dateDigitToStr() {
         assertEquals("15 июля 2016", dateDigitToStr("15.07.2016"))
+        assertEquals("1 января 13151", dateDigitToStr("01.01.13151"))
         assertEquals("", dateDigitToStr("01.02.20.19"))
         assertEquals("", dateDigitToStr("28.00.2000"))
         assertEquals("3 апреля 2011", dateDigitToStr("03.04.2011"))
@@ -72,27 +74,27 @@ class Tests {
     @Test
     @Tag("5")
     fun bestLongJump() {
+        assertEquals(706, bestLongJump("706 %"))
         assertEquals(717, bestLongJump("706 % - 717 - 703"))
         assertEquals(-1, bestLongJump("% - - % -"))
         assertEquals(754, bestLongJump("700 717 707 % 754"))
         assertEquals(-1, bestLongJump("700 + 700"))
-
     }
 
     @Test
     @Tag("6")
     fun bestHighJump() {
+        assertEquals(230, bestHighJump("220 + 224 %+ 228 %- 230 + 232 %%- 234 %"))
         assertEquals(226, bestHighJump("226 +"))
         assertEquals(-1, bestHighJump("???"))
-        assertEquals(230, bestHighJump("220 + 224 %+ 228 %- 230 + 232 %%- 234 %"))
     }
 
     @Test
     @Tag("6")
     fun plusMinus() {
         assertEquals(0, plusMinus("0"))
-        assertEquals(4, plusMinus("2 + 2"))
         assertEquals(6, plusMinus("2 + 31 - 40 + 13"))
+        assertEquals(4, plusMinus("2 + 2"))
         assertEquals(-1, plusMinus("0 - 1"))
         assertThrows(IllegalArgumentException::class.java) { plusMinus("+2") }
         assertThrows(IllegalArgumentException::class.java) { plusMinus("+ 4") }
@@ -104,17 +106,17 @@ class Tests {
     @Test
     @Tag("6")
     fun firstDuplicateIndex() {
+        assertEquals(40, firstDuplicateIndex("Яблоко упало на ветку с ветки оно упало на на землю"))
         assertEquals(-1, firstDuplicateIndex("Привет"))
         assertEquals(9, firstDuplicateIndex("Он пошёл в в школу"))
-        assertEquals(40, firstDuplicateIndex("Яблоко упало на ветку с ветки оно упало на на землю"))
         assertEquals(9, firstDuplicateIndex("Мы пошли прямо Прямо располагался магазин"))
     }
 
     @Test
     @Tag("6")
     fun mostExpensive() {
-        assertEquals("", mostExpensive(""))
         assertEquals("Курица", mostExpensive("Хлеб 39.9; Молоко 62.5; Курица 184.0; Конфеты 89.9"))
+        assertEquals("", mostExpensive(""))
         assertEquals("Вино", mostExpensive("Вино 255.0"))
     }
 
