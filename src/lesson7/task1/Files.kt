@@ -249,17 +249,18 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     val reader = File(inputName).readLines()
     fun findTheLongest(word: List<String>): List<String> {
         var wordLength = 0
+        val wordListFilter = mutableListOf<String>()
         val wordList = mutableListOf<String>()
         for (curr in word) {
-            if (curr.length > wordLength) wordLength = curr.length
+            if (curr.toLowerCase().toCharArray().toSet().size == curr.length) {
+                wordList.add(curr)
+                if (curr.length > wordLength) wordLength = curr.length
+            }
         }
-        for (curr in word) {
-            if (curr.length == wordLength && curr.toLowerCase().toCharArray().toSet().size == wordLength) wordList.add(
-                curr
-            )
+        for (curr in wordList) {
+            if (curr.length == wordLength) wordListFilter.add(curr)
         }
-        println(wordList)
-        return wordList
+        return wordListFilter
     }
     if (findTheLongest(reader).isNotEmpty()) {
         for (counter in 0 until findTheLongest(reader).size - 1) {
