@@ -227,7 +227,7 @@ Basic, Ruby, Swift.
     @Tag("12")
     fun chooseLongestChaoticWord() {
         chooseLongestChaoticWord("input/chaotic_in1.txt", "temp.txt")
-        assertFileContent("temp.txt", "a, a")
+        assertFileContent("temp.txt", "")
         File("temp.txt").delete()
     }
 

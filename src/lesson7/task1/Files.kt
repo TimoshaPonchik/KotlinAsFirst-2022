@@ -258,18 +258,18 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
                 curr
             )
         }
+        println(wordList)
         return wordList
     }
-    if (reader.isNotEmpty()) {
+    if (findTheLongest(reader).isNotEmpty()) {
         for (counter in 0 until findTheLongest(reader).size - 1) {
             writer.write("${findTheLongest(reader)[counter]}, ")
         }
         writer.write(findTheLongest(reader).last())
-        writer.close()
     } else {
         writer.write("")
-        writer.close()
     }
+    writer.close()
 }
 
 /**
