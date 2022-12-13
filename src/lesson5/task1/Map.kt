@@ -124,8 +124,8 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    for ((key) in a) {
-        if (a[key] != b[key]) return false
+    for ((key, value) in a) {
+        if (value != b[key]) return false
     }
     return true
 }
@@ -177,24 +177,14 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().int
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    val number = mutableListOf<String>()
-    val numMap = mutableMapOf<String, String>()
-
-    for ((key) in mapA) {
-        number.add(key)
-    }
-
+    val number = mutableMapOf<String, String>()
+    number.putAll(mapB)
+    number.putAll(mapA)
     for ((key) in mapB) {
-        number.add(key)
+        if (mapA.containsKey(key) && mapA[key] != mapB[key])
+            number[key] = "${mapA[key]}, ${mapB[key]}"
     }
-
-    for (i in number) {
-        if (mapA[i] != null && mapB[i] != null) numMap[i] = mapA[i] + ", " + mapB[i]
-        if (mapA[i] == mapB[i]) numMap[i] = mapA[i].toString()
-        if (mapA[i] == null) numMap[i] = mapB[i].toString()
-        if (mapB[i] == null) numMap[i] = mapA[i].toString()
-    }
-    return numMap
+    return number
 }
 
 /**
@@ -290,12 +280,8 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 
 fun hasAnagrams(words: List<String>): Boolean {
-    var counter = 0
-    for (element in words) {
-        if (counter > 0 && words.first()
-                .toSet() == element.toSet() && words.first().length == element.length
-        ) return true
-        counter = 1
+    for (i in words) {
+        if (words.map { it.toSet() }.count { it == i.toSet() && it.size == i.length } >= 2) return true
     }
     return false
 }
@@ -334,7 +320,22 @@ fun hasAnagrams(words: List<String>): Boolean {
  *          "GoodGnome" to setOf()
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    val friendsMap = mutableMapOf<String, Set<String>>()
+    val friendsList = mutableSetOf<String>()
+    for (i in friends) {
+        for (ii in 0 until i.value.size) {
+            val name = i.value.toList()[ii]
+            if (!friends[name].isNullOrEmpty())
+                friendsList.addAll(friends[name]!!)
+        }
+        friendsMap[i.key] = friendsList.toSet()
+        println(friendsMap)
+        friendsList.clear()
+    }
+
+    return mapOf()
+}
 
 /**
  * Сложная (6 баллов)

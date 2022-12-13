@@ -186,7 +186,6 @@ class Tests {
                 mapOf("" to "")
             )
         )
-
         assertEquals(
             mapOf("Emergency" to "112", "Police" to "02"),
             mergePhoneBooks(
@@ -194,6 +193,7 @@ class Tests {
                 mapOf("Emergency" to "112", "Police" to "02")
             )
         )
+
         assertEquals(
             mapOf("Emergency" to "112, 911", "Police" to "02"),
             mergePhoneBooks(
@@ -317,7 +317,6 @@ class Tests {
         assertTrue(hasAnagrams(listOf("", "a", "a")))
         assertTrue(hasAnagrams(listOf("рот", "свет", "тор")))
         assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
-        assertFalse(hasAnagrams(listOf("рот", "свет", "код", "дверь")))
         assertFalse(hasAnagrams(listOf("поле", "полено")))
         assertTrue(hasAnagrams(listOf("лунь", "нуль")))
     }
@@ -325,19 +324,6 @@ class Tests {
     @Test
     @Tag("5")
     fun propagateHandshakes() {
-        assertEquals(
-            mapOf(
-                "Marat" to setOf("Mikhail", "Sveta"),
-                "Sveta" to setOf("Mikhail"),
-                "Mikhail" to setOf()
-            ),
-            propagateHandshakes(
-                mapOf(
-                    "Marat" to setOf("Sveta"),
-                    "Sveta" to setOf("Mikhail")
-                )
-            )
-        )
         assertEquals(
             mapOf(
                 "Marat" to setOf("Mikhail", "Sveta"),
@@ -350,10 +336,23 @@ class Tests {
             propagateHandshakes(
                 mapOf(
                     "Marat" to setOf("Mikhail", "Sveta"),
-                    "Sveta" to setOf("Marat"),
+                    "Sveta" to setOf("Marat"    ),
                     "Mikhail" to setOf("Sveta"),
                     "Friend" to setOf("GoodGnome"),
                     "EvilGnome" to setOf()
+                )
+            )
+        )
+        assertEquals(
+            mapOf(
+                "Marat" to setOf("Mikhail", "Sveta"),
+                "Sveta" to setOf("Mikhail"),
+                "Mikhail" to setOf()
+            ),
+            propagateHandshakes(
+                mapOf(
+                    "Marat" to setOf("Sveta"),
+                    "Sveta" to setOf("Mikhail")
                 )
             )
         )

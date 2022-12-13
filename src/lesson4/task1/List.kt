@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson3.task1.isPrime
+import java.lang.StringBuilder
 import kotlin.math.*
 import kotlin.math.sqrt
 
@@ -81,6 +82,7 @@ fun invertPositives(list: MutableList<Int>) {
  *
  * Из имеющегося списка целых чисел, сформировать список их квадратов
  */
+
 fun squares(list: List<Int>) = list.map { it * it }
 
 /**
@@ -248,7 +250,6 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 
 
-
 fun convertToString(n: Int, base: Int): String {
     val result = mutableListOf<Char>()
     var mutableN = n
@@ -315,76 +316,76 @@ fun decimalFromString(str: String, base: Int): Int {
 
 fun roman(n: Int): String {
     var nTemp = n
-    var strTemp = ""
+    val strTemp = StringBuilder()
     while (nTemp != 0) {
         when {
             nTemp >= 1000 -> {
-                strTemp += "M"
+                strTemp.append("M")
                 nTemp -= 1000
             }
 
             nTemp >= 900 -> {
-                strTemp += "CM"
+                strTemp.append("CM")
                 nTemp -= 900
             }
 
             nTemp >= 500 -> {
-                strTemp += "D"
+                strTemp.append("D")
                 nTemp -= 500
             }
 
             nTemp >= 400 -> {
-                strTemp += "CD"
+                strTemp.append("CD")
                 nTemp -= 400
             }
 
             nTemp >= 100 -> {
-                strTemp += "C"
+                strTemp.append("C")
                 nTemp -= 100
             }
 
             nTemp >= 90 -> {
-                strTemp += "XC"
+                strTemp.append("XC")
                 nTemp -= 90
             }
 
             nTemp >= 50 -> {
-                strTemp += "L"
+                strTemp.append("L")
                 nTemp -= 50
             }
 
             nTemp >= 40 -> {
-                strTemp += "XL"
+                strTemp.append("XL")
                 nTemp -= 40
             }
 
             nTemp >= 10 -> {
-                strTemp += "X"
+                strTemp.append("X")
                 nTemp -= 10
             }
 
             nTemp >= 9 -> {
-                strTemp += "IX"
+                strTemp.append("IX")
                 nTemp -= 9
             }
 
             nTemp >= 5 -> {
-                strTemp += "V"
+                strTemp.append("V")
                 nTemp -= 5
             }
 
             nTemp >= 4 -> {
-                strTemp += "IV"
+                strTemp.append("IV")
                 nTemp -= 4
             }
 
             nTemp >= 1 -> {
-                strTemp += "I"
+                strTemp.append("I")
                 nTemp -= 1
             }
         }
     }
-    return (strTemp)
+    return strTemp.toString()
 }
 
 /**

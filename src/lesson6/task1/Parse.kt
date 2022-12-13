@@ -253,7 +253,7 @@ fun firstDuplicateIndex(str: String): Int {
 fun mostExpensive(description: String): String {
     if (!Regex("""([а-яА-Я]+ \d+(.\d+)?(; )?)+""").matches(description)) return ""
     val a =
-        description.split("; ").map { sub -> sub.substring(0).split(" ") }
+        description.split("; ").map { sub -> sub.split(" ") }
             .associate { it.last().toDouble() to it.first() }
     val key = a.keys.max()
     return a[key]!!
@@ -270,7 +270,41 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+
+
+fun fromRoman(roman: String): Int {
+
+    var count = 0
+    var result = 0
+    val mapChange = mapOf(
+        "I" to 1,
+        "VI" to 4,
+        "V" to 5,
+        "XI" to 9,
+        "X" to 10,
+        "LX" to 40,
+        "L" to 50,
+        "CX" to 90,
+        "C" to 100,
+        "DC" to 400,
+        "D" to 500,
+        "MC" to 900,
+        "M" to 1000,
+    )
+
+    if (!Regex("""[IVXDCLM]+""").matches(roman)) return -1
+    val digit = roman.toCharArray().reversed()
+    while (count < digit.size) {
+        if (count != digit.size - 1 && mapChange[digit[count].toString() + digit[count + 1].toString()] != null) {
+            result += mapChange[digit[count].toString() + digit[count + 1].toString()]!!
+            count += 2
+        } else {
+            result += mapChange[digit[count].toString()]!!
+            count++
+        }
+    }
+    return result
+}
 
 /**
  * Очень сложная (7 баллов)
