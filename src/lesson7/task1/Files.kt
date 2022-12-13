@@ -152,11 +152,7 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
-    val reader = File(inputName).readLines()
-    for (i in reader) {
-        println(i)
-    }
+    TODO()
 }
 
 /**
@@ -179,7 +175,23 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    /*
+    val reader = File(inputName).readText()
+    val mutList = mutableMapOf<String, Int>()
+    var a = ""
+    var b = mutableListOf<String>()
+    a = Regex("""[\d!?\-.,]+""").replace(reader.toLowerCase(), " ")
+    b = Regex("""( )+""").split(a) as MutableList<String>
+    for (i in b) {
+        if (i != "") mutList[i] = b.count { it == i }
+    }
+    println(mutList)
+    return mutList
+    */
+    TODO()
+}
+
 
 /**
  * Средняя (14 баллов)
