@@ -152,7 +152,11 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val reader = File(inputName).readLines()
+    for (i in reader) {
+        println(i)
+    }
 }
 
 /**
@@ -251,14 +255,17 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
             if (curr.length > wordLength) wordLength = curr.length
         }
         for (curr in word) {
-            if (curr.length == wordLength && curr.toLowerCase().toCharArray().toSet().size == wordLength) wordList.add(curr)
+            if (curr.length == wordLength && curr.toLowerCase().toCharArray().toSet().size == wordLength) wordList.add(
+                curr
+            )
         }
         return wordList
     }
 
-    for (i in findTheLongest(reader)) {
-        if (i != findTheLongest(reader).last()) writer.write("$i, ") else writer.write(i)
+    for (counter in 0 until findTheLongest(reader).size - 1) {
+        writer.write("${findTheLongest(reader)[counter]}, ")
     }
+    writer.write(findTheLongest(reader).last())
     writer.close()
 }
 
